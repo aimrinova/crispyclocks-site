@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="de" data-theme="dark">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>AGB &mdash; CrispyClocks</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.min.css">
+  <style>
+    :root, [data-theme="dark"] {
+      --cc-terracotta: #c94e2a; --cc-gold: #c9a84c;
+      --cc-bg-base: #120d0a; --cc-surface: #1d1411; --cc-border: #3d2418;
+      --cc-text: #f0e4da; --cc-text-muted: #9c7f6e; --cc-text-subtle: #5c4030;
+      --pico-background-color: #120d0a; --pico-color: #f0e4da;
+      --pico-muted-color: #9c7f6e; --pico-muted-border-color: #3d2418;
+      --pico-primary: #c94e2a; --pico-primary-background: #c94e2a;
+      --pico-primary-hover: #e05c30; --pico-primary-inverse: #f0e4da;
+    }
+    body { color-scheme: dark; }
+    header[role="banner"] { border-bottom: 1px solid #3d2418; padding: 0.875rem 0; }
+    .cc-brand { font-weight: 800; letter-spacing: -0.03em; color: #c94e2a; text-decoration: none; font-size: 1.1rem; }
+    .cc-brand span { color: #f0e4da; }
+    main { max-width: 42rem; margin: 0 auto; padding: 3rem 1rem 5rem; }
+    h1 { font-size: 1.75rem; font-weight: 800; letter-spacing: -0.03em; margin-bottom: 0.25rem; }
+    h2 { font-size: 1rem; font-weight: 600; color: #c9a84c; margin: 2rem 0 0.5rem; }
+    p, ol, ul { color: #9c7f6e; font-size: 0.9rem; line-height: 1.7; }
+    ol, ul { padding-left: 1.25rem; }
+    ol li, ul li { margin-bottom: 0.35rem; }
+    a { color: #c94e2a; }
+    .cc-notice {
+      background: #1d1411; border: 1px solid #3d2418; border-left: 3px solid #c9a84c;
+      border-radius: 0 0.5rem 0.5rem 0; padding: 0.85rem 1.1rem; margin-top: 2rem;
+      font-size: 0.8rem; color: #9c7f6e; line-height: 1.6;
+    }
+    footer[role="contentinfo"] { border-top: 1px solid #3d2418; padding: 1.25rem 0; margin-top: 4rem; }
+    footer small { color: #5c4030; }
+    footer a { color: #9c7f6e; text-decoration: none; }
+    footer a:hover { color: #c9a84c; }
+  </style>
+</head>
+<body>
+
+  <header class="container-fluid" role="banner">
+    <nav class="container">
+      <ul><li><a href="index.html" class="cc-brand">Crispy<span>Clocks</span></a></li></ul>
+      <ul><li><a href="index.html" class="secondary">← Zurück</a></li></ul>
+    </nav>
+  </header>
+
+  <main>
+    <h1>Allgemeine Geschäftsbedingungen (AGB)</h1>
+    <p style="color:#5c4030;font-size:0.8rem;">Stand: Juni 2026</p>
+
+    <h2>§ 1 Geltungsbereich</h2>
+    <p>
+      Diese Allgemeinen Geschäftsbedingungen gelten für alle Verträge zwischen
+      Daniel Schubert, Hennensteig 2, 12355 Berlin (nachfolgend „Anbieter") und
+      Unternehmern im Sinne von §&nbsp;14 BGB (nachfolgend „Kunde") über die
+      Lieferung und Installation von CrispyClocks-Anwesenheitsterminals sowie
+      die damit verbundene Software.
+    </p>
+    <p>
+      Abweichende Bedingungen des Kunden werden nicht anerkannt, es sei denn,
+      der Anbieter stimmt ihrer Geltung ausdrücklich schriftlich zu.
+    </p>
+
+    <h2>§ 2 Leistungsumfang</h2>
+    <p>Im Pauschalpreis von <strong>150 &euro; pro Terminal</strong> enthalten sind:</p>
+    <ol>
+      <li>Ein NFC-fähiges Terminal (Hardware)</li>
+      <li>Installation und Inbetriebnahme vor Ort beim Kunden</li>
+      <li>Einrichtung der CrispyClocks-Backend-Software auf dem vom Kunden
+          bereitgestellten Server oder Gerät</li>
+      <li>Ein HR-API-Konnektor nach Wahl des Kunden aus dem verfügbaren Angebot</li>
+      <li>Grundkonfiguration: Anlage der Organisation, Terminals und eines
+          Administrator-Zugangs</li>
+    </ol>
+    <p>Nicht im Pauschalpreis enthalten:</p>
+    <ol>
+      <li>Server-Hardware oder Hosting (vom Kunden bereitzustellen)</li>
+      <li>Mitarbeiterdaten-Import und Einpflege von Zugangskarten</li>
+      <li>Zusätzliche HR-Konnektoren (Aufpreis nach Absprache)</li>
+      <li>Laufende Wartung und Support nach Abnahme (auf Anfrage)</li>
+    </ol>
+
+    <h2>§ 3 Preise und Zahlung</h2>
+    <p>
+      Der Preis beträgt <strong>150 &euro; pro Terminal</strong> zuzüglich der
+      gesetzlichen Umsatzsteuer (sofern anwendbar). Für jedes weitere Terminal
+      beträgt der Preis <strong>80 &euro;</strong> bei gleicher Installation.
+    </p>
+    <p>
+      Die Zahlung ist binnen 14 Tagen nach Rechnungsstellung fällig.
+      Zahlungsart: Überweisung oder nach Absprache.
+    </p>
+
+    <h2>§ 4 Mitwirkungspflichten des Kunden</h2>
+    <p>Der Kunde stellt für die Installation bereit:</p>
+    <ol>
+      <li>Einen geeigneten Server oder Rechner mit Internetzugang (lokal oder
+          VPN-geschützt) und Docker-Unterstützung</li>
+      <li>Strom- und Netzwerkanschluss am geplanten Montageort des Terminals</li>
+      <li>Zugang zum Installationsort zum vereinbarten Termin</li>
+      <li>Einen Ansprechpartner, der die Abnahme bestätigt</li>
+    </ol>
+
+    <h2>§ 5 Softwarelizenz</h2>
+    <p>
+      Die CrispyClocks-Software ist proprietäre Software. Der Anbieter räumt dem
+      Kunden ein nicht übertragbares, nicht ausschließliches Recht zur Nutzung
+      der Software auf der vereinbarten Infrastruktur ein. Der Kunde darf die
+      Software nicht vervielfältigen, weiterverkaufen, dekompilieren oder für
+      Dritte zugänglich machen.
+    </p>
+    <p>
+      Software-Updates sind im Preis enthalten, soweit der Anbieter diese
+      bereitstellt. Ein Anspruch auf bestimmte Updates besteht nicht.
+    </p>
+
+    <h2>§ 6 Datenschutz und Auftragsverarbeitung</h2>
+    <p>
+      Da die CrispyClocks-Software Anwesenheitsdaten von Mitarbeitern des Kunden
+      verarbeitet, schließen Anbieter und Kunde vor Inbetriebnahme einen
+      Auftragsverarbeitungsvertrag (AVV) gemäß Art.&nbsp;28 DSGVO ab. Die
+      Software speichert alle Daten ausschließlich auf der Infrastruktur des
+      Kunden. Der Anbieter hat nach Abschluss der Installation keinen
+      Zugriff auf Produktivdaten.
+    </p>
+
+    <h2>§ 7 Gewährleistung</h2>
+    <p>
+      Der Anbieter gewährleistet, dass die gelieferte Hardware bei Übergabe frei
+      von Sachmängeln ist und die Software die vereinbarten Funktionen erfüllt.
+      Gewährleistungsansprüche verjähren in 12 Monaten ab Abnahme.
+    </p>
+    <p>
+      Mängel sind unverzüglich schriftlich (E-Mail genügt) anzuzeigen.
+      Der Anbieter hat das Recht zur zweimaligen Nacherfüllung.
+    </p>
+
+    <h2>§ 8 Haftungsbeschränkung</h2>
+    <p>
+      Der Anbieter haftet unbeschränkt nur bei Vorsatz und grober Fahrlässigkeit
+      sowie bei Schäden aus der Verletzung von Leben, Körper oder Gesundheit.
+      Bei leichter Fahrlässigkeit haftet der Anbieter nur bei Verletzung
+      wesentlicher Vertragspflichten (Kardinalpflichten), begrenzt auf den
+      vorhersehbaren, vertragstypischen Schaden.
+    </p>
+    <p>
+      Die Haftung für Datenverlust ist auf den typischen Wiederherstellungsaufwand
+      begrenzt, der bei regelmäßiger und risikogerechter Datensicherung durch den
+      Kunden entstanden wäre.
+    </p>
+
+    <h2>§ 9 Schlussbestimmungen</h2>
+    <p>
+      Es gilt das Recht der Bundesrepublik Deutschland unter Ausschluss des
+      UN-Kaufrechts. Gerichtsstand für alle Streitigkeiten ist Berlin, sofern
+      der Kunde Kaufmann im Sinne des HGB ist.
+    </p>
+    <p>
+      Sollten einzelne Bestimmungen dieser AGB unwirksam sein, bleibt die
+      Wirksamkeit der übrigen Bestimmungen unberührt.
+    </p>
+
+    <div class="cc-notice">
+      Diese AGB sind ein Entwurf und wurden nicht anwaltlich geprüft.
+      Bitte vor Verwendung durch einen Rechtsanwalt prüfen lassen,
+      insbesondere hinsichtlich des Auftragsverarbeitungsvertrags (AVV),
+      der Kleinunternehmerregelung (§&nbsp;19 UStG) und der
+      Gewährleistungsfristen im B2B-Bereich.
+    </div>
+  </main>
+
+  <footer class="container-fluid" role="contentinfo">
+    <div class="container">
+      <small>
+        &copy; 2026 Daniel Schubert &ensp;&middot;&ensp;
+        <a href="impressum.html">Impressum</a> &ensp;&middot;&ensp;
+        <a href="privacy.html">Datenschutz</a> &ensp;&middot;&ensp;
+        <a href="terms.html">AGB</a>
+      </small>
+    </div>
+  </footer>
+
+</body>
+</html>

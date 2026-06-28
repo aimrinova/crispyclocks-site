@@ -256,6 +256,38 @@
       text-align: center;
     }
 
+    /* ── Terminal showcase ────────────────────────── */
+    .cc-showcase {
+      border-top: 1px solid var(--cc-border);
+      margin: 3.5rem 0 0;
+      padding-top: 3rem;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 3rem;
+      align-items: center;
+    }
+    @media (max-width: 640px) {
+      .cc-showcase { grid-template-columns: 1fr; }
+      .cc-showcase-visual { order: -1; }
+    }
+    .cc-showcase-visual { display: flex; justify-content: center; }
+    .cc-showcase-text h2 {
+      font-size: 1.35rem; font-weight: 700;
+      letter-spacing: -0.02em; margin-bottom: 1rem;
+    }
+    .cc-showcase-text h2 span { color: var(--cc-terracotta); }
+    .cc-showcase-text p {
+      color: var(--cc-text-muted); font-size: 0.9rem;
+      line-height: 1.7; margin-bottom: 1.25rem;
+    }
+    .cc-spec-list { list-style: none; padding: 0; margin: 0; display: grid; gap: 0.55rem; }
+    .cc-spec-list li {
+      font-size: 0.85rem; color: var(--cc-text-muted);
+      display: flex; align-items: flex-start; gap: 0.5rem; line-height: 1.5;
+    }
+    .cc-spec-list li::before { content: "\2192"; color: var(--cc-gold); font-weight: 700; flex-shrink: 0; }
+    .cc-spec-list li strong { color: var(--cc-text); font-weight: 500; }
+
     /* ── HR connectors ────────────────────────────── */
     .cc-connectors {
       margin-top: 3rem;
@@ -402,6 +434,60 @@
 
     </div>
 
+    <!-- Terminal showcase -->
+    <section class="cc-showcase">
+      <div class="cc-showcase-visual">
+        <svg viewBox="0 0 180 310" fill="none" xmlns="http://www.w3.org/2000/svg" width="220" aria-label="CrispyClocks terminal illustration">
+          <!-- Ambient glow -->
+          <ellipse cx="90" cy="158" rx="82" ry="130" fill="rgba(201,78,42,0.05)"/>
+          <!-- Terminal body -->
+          <rect x="15" y="10" width="150" height="290" rx="20" fill="#1d1411" stroke="#c94e2a" stroke-width="1.5"/>
+          <!-- Status LED — gold = online -->
+          <circle cx="152" cy="24" r="3.5" fill="#c9a84c"/>
+          <!-- Brand mark -->
+          <text x="28" y="26" font-family="system-ui,sans-serif" font-size="7.5" font-weight="700" fill="#c94e2a" opacity="0.8">CC</text>
+          <!-- Screen -->
+          <rect x="28" y="36" width="124" height="155" rx="8" fill="#2a1c15"/>
+          <!-- Success ring -->
+          <circle cx="90" cy="106" r="30" stroke="#c9a84c" stroke-width="1.5" fill="none"/>
+          <!-- Checkmark -->
+          <polyline points="77,106 88,118 108,94" stroke="#c9a84c" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/>
+          <!-- Status text -->
+          <text x="90" y="154" text-anchor="middle" font-family="system-ui,sans-serif" font-size="10" font-weight="600" fill="#f0e4da">Checked in</text>
+          <text x="90" y="169" text-anchor="middle" font-family="system-ui,sans-serif" font-size="9" fill="#c9a84c">09:03</text>
+          <text x="90" y="182" text-anchor="middle" font-family="system-ui,sans-serif" font-size="8" fill="#9c7f6e">Anna M.</text>
+          <!-- Divider -->
+          <line x1="28" y1="197" x2="152" y2="197" stroke="#3d2418" stroke-width="1"/>
+          <!-- NFC label -->
+          <text x="90" y="220" text-anchor="middle" font-family="system-ui,sans-serif" font-size="6.5" letter-spacing="0.14em" fill="#5c4030">TAP HERE</text>
+          <!-- NFC waves — arcs opening upward -->
+          <path d="M 83 248 A 7 7 0 0 0 97 248"   stroke="#c94e2a" stroke-width="2.5" stroke-linecap="round" fill="none" opacity="0.9"/>
+          <path d="M 77 248 A 13 13 0 0 0 103 248" stroke="#c94e2a" stroke-width="2"   stroke-linecap="round" fill="none" opacity="0.6"/>
+          <path d="M 71 248 A 19 19 0 0 0 109 248" stroke="#c94e2a" stroke-width="1.5" stroke-linecap="round" fill="none" opacity="0.3"/>
+          <!-- NFC source dot -->
+          <circle cx="90" cy="254" r="2.5" fill="#c94e2a"/>
+          <!-- Home bar -->
+          <rect x="70" y="282" width="40" height="4" rx="2" fill="#3d2418"/>
+        </svg>
+      </div>
+      <div class="cc-showcase-text">
+        <h2>A terminal that <span>fits anywhere</span></h2>
+        <p>
+          A compact, wall-mounted NFC reader connected to your local network.
+          Employees tap a card, tag, or sticker &mdash; and the result appears
+          on screen within a second. No app. No login. No friction.
+        </p>
+        <ul class="cc-spec-list">
+          <li><strong>NFC tap</strong> &mdash; contactless cards, tags, and stickers</li>
+          <li><strong>Instant on-screen feedback</strong> &mdash; name, time, check-in or out</li>
+          <li><strong>Local network only</strong> &mdash; no internet required at the terminal</li>
+          <li><strong>Wall mountable</strong> &mdash; mounting hardware included</li>
+          <li><strong>Always on</strong> &mdash; USB-C powered, auto-restart on failure</li>
+          <li><strong>Private by design</strong> &mdash; raw card UID never stored</li>
+        </ul>
+      </div>
+    </section>
+
     <!-- Engineering principles section -->
     <section class="cc-principles">
       <h2>Built on <span>honest</span> engineering</h2>
@@ -505,8 +591,14 @@
   <footer class="container-fluid" role="contentinfo">
     <div class="container">
       <small>
-        &copy; 2026 <a href="https://github.com/aimrinova">aimrinova</a>.
-        All rights reserved. &ensp;&middot;&ensp; Proprietary software &mdash; not open source.
+        &copy; 2026 Daniel Schubert &ensp;&middot;&ensp;
+        <a href="mailto:daschub496@gmail.com">daschub496@gmail.com</a> &ensp;&middot;&ensp;
+        <a href="tel:+4917641411988">+49 176 41411988</a>
+      </small>
+      <small style="display:block;margin-top:0.4rem;">
+        <a href="impressum.html">Impressum</a> &ensp;&middot;&ensp;
+        <a href="privacy.html">Datenschutz</a> &ensp;&middot;&ensp;
+        <a href="terms.html">AGB</a>
       </small>
     </div>
   </footer>
