@@ -1,12 +1,62 @@
 <!DOCTYPE html>
-<html lang="en" data-theme="dark">
+<html lang="de" data-theme="dark">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>CrispyClocks &mdash; Terminal attendance. Honest records.</title>
-  <meta name="description" content="Terminal-based attendance for modern teams. Every scan is written once, never changed, and stays on your hardware.">
 
-  <!-- Pico CSS — acceptable on the public marketing page (internet assumed) -->
+  <!-- ── Primary SEO ──────────────────────────────────────────────────── -->
+  <title>CrispyClocks &mdash; Digitale Zeiterfassung per NFC-Terminal</title>
+  <meta name="description" content="DSGVO-konforme Zeiterfassung per NFC-Terminal. Einmalige Installation ab 150 €, kein Abo, alle Daten auf Ihrer eigenen Hardware. Inklusive HR-Konnektor (Personio, DATEV, SAP u.a.).">
+  <meta name="keywords" content="Zeiterfassung, NFC Terminal, digitale Stempeluhr, DSGVO Zeiterfassung, On-Premise Zeiterfassung, Zeiterfassung ohne Cloud, Personio Zeiterfassung, DATEV Zeiterfassung, Anwesenheitserfassung, Mitarbeiter Zeiterfassung, Zeiterfassung einmalig kaufen, Zeiterfassung kein Abo">
+  <meta name="author" content="Daniel Schubert">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://aimrinova.github.io/crispyclocks-site/">
+
+  <!-- ── Open Graph (LinkedIn, WhatsApp, Facebook) ────────────────────── -->
+  <meta property="og:type"        content="website">
+  <meta property="og:locale"      content="de_DE">
+  <meta property="og:title"       content="CrispyClocks &mdash; Digitale Zeiterfassung. Ehrliche Daten.">
+  <meta property="og:description" content="DSGVO-konforme NFC-Zeiterfassung für Ihr Unternehmen. Einmalig 150 € pro Terminal, kein Abo, Daten auf Ihrer Hardware.">
+  <meta property="og:url"         content="https://aimrinova.github.io/crispyclocks-site/">
+  <meta property="og:site_name"   content="CrispyClocks">
+
+  <!-- ── Twitter / X Card ─────────────────────────────────────────────── -->
+  <meta name="twitter:card"        content="summary">
+  <meta name="twitter:title"       content="CrispyClocks &mdash; Digitale Zeiterfassung. Ehrliche Daten.">
+  <meta name="twitter:description" content="NFC-Terminal-Zeiterfassung. Einmalig kaufen, kein Abo, DSGVO-konform, Daten bleiben bei Ihnen.">
+
+  <!-- ── Structured data (Google rich results) ─────────────────────────── -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "SoftwareApplication",
+    "name": "CrispyClocks",
+    "applicationCategory": "BusinessApplication",
+    "operatingSystem": "Any",
+    "description": "DSGVO-konforme digitale Zeiterfassung per NFC-Terminal. Einmalige Installation, kein Abo, alle Daten bleiben auf der Hardware des Kunden.",
+    "offers": {
+      "@type": "Offer",
+      "price": "150",
+      "priceCurrency": "EUR",
+      "description": "Einmalige Installation inkl. Hardware, Software und HR-Konnektor"
+    },
+    "author": {
+      "@type": "Person",
+      "name": "Daniel Schubert",
+      "email": "daschub496@gmail.com",
+      "telephone": "+4917641411988",
+      "address": {
+        "@type": "PostalAddress",
+        "streetAddress": "Hennensteig 2",
+        "postalCode": "12355",
+        "addressLocality": "Berlin",
+        "addressCountry": "DE"
+      }
+    }
+  }
+  </script>
+
+  <!-- Pico CSS — CDN acceptable for this public marketing page -->
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.min.css">
 
   <style>
@@ -45,281 +95,116 @@
     body { color-scheme: dark; }
 
     /* ── Nav ──────────────────────────────────────── */
-    header[role="banner"] {
-      border-bottom: 1px solid var(--cc-border);
-      padding: 0.875rem 0;
-    }
+    header[role="banner"] { border-bottom: 1px solid var(--cc-border); padding: 0.875rem 0; }
     .cc-nav-logo { display: inline-flex; align-items: center; text-decoration: none; gap: 0.6rem; }
-    .cc-brand-text {
-      font-size: 1.1rem; font-weight: 800;
-      letter-spacing: -0.03em; line-height: 1;
-    }
+    .cc-brand-text { font-size: 1.1rem; font-weight: 800; letter-spacing: -0.03em; line-height: 1; }
     .cc-brand-text .accent { color: var(--cc-terracotta); }
 
     /* ── Badge ────────────────────────────────────── */
     .cc-badge {
-      display: inline-block;
-      font-size: 0.68rem;
-      font-weight: 600;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      color: var(--cc-gold);
-      border: 1px solid var(--cc-gold-muted);
-      border-radius: 999px;
-      padding: 0.2rem 0.65rem;
-      margin-bottom: 1.5rem;
+      display: inline-block; font-size: 0.68rem; font-weight: 600;
+      letter-spacing: 0.08em; text-transform: uppercase;
+      color: var(--cc-gold); border: 1px solid var(--cc-gold-muted);
+      border-radius: 999px; padding: 0.2rem 0.65rem; margin-bottom: 1.5rem;
     }
 
     /* ── Hero ─────────────────────────────────────── */
     .cc-hero { padding: 5rem 0 3.5rem; text-align: center; }
-    .cc-hero-icon {
-      width: 88px; height: 88px;
-      margin-bottom: 1.5rem;
-      filter: drop-shadow(0 4px 24px rgba(201, 78, 42, 0.35));
-    }
-    .cc-hero h1 {
-      font-size: clamp(2.25rem, 6vw, 3.75rem);
-      font-weight: 800;
-      letter-spacing: -0.04em;
-      line-height: 1.1;
-      color: var(--cc-text);
-      margin-bottom: 0;
-    }
+    .cc-hero-icon { width: 88px; height: 88px; margin-bottom: 1.5rem; filter: drop-shadow(0 4px 24px rgba(201, 78, 42, 0.35)); }
+    .cc-hero h1 { font-size: clamp(2.25rem, 6vw, 3.75rem); font-weight: 800; letter-spacing: -0.04em; line-height: 1.1; color: var(--cc-text); margin-bottom: 0; }
     .cc-hero h1 .accent { color: var(--cc-terracotta); }
-    .cc-tagline {
-      font-size: 1.05rem;
-      font-weight: 500;
-      color: var(--cc-gold);
-      font-style: italic;
-      margin: 0.75rem 0 0.85rem;
-    }
-    .cc-hero .lead {
-      font-size: 1.1rem;
-      line-height: 1.7;
-      color: var(--cc-text-muted);
-      max-width: 46rem;
-      margin: 0 auto 2.5rem;
-    }
+    .cc-tagline { font-size: 1.05rem; font-weight: 500; color: var(--cc-gold); font-style: italic; margin: 0.75rem 0 0.85rem; }
+    .cc-hero .lead { font-size: 1.1rem; line-height: 1.7; color: var(--cc-text-muted); max-width: 46rem; margin: 0 auto 2.5rem; }
     .cc-actions { display: flex; gap: 0.75rem; justify-content: center; flex-wrap: wrap; }
 
     /* ── Features ─────────────────────────────────── */
-    .cc-features {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr));
-      gap: 1rem;
-      margin: 3.5rem 0;
-    }
-    .cc-card {
-      background: var(--cc-surface);
-      border: 1px solid var(--cc-border);
-      border-radius: 0.75rem;
-      padding: 1.5rem;
-      transition: border-color 0.15s ease;
-    }
+    .cc-features { display: grid; grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr)); gap: 1rem; margin: 3.5rem 0; }
+    .cc-card { background: var(--cc-surface); border: 1px solid var(--cc-border); border-radius: 0.75rem; padding: 1.5rem; transition: border-color 0.15s ease; }
     .cc-card:hover { border-color: var(--cc-terracotta); }
     .cc-card.gold-accent { border-left: 3px solid var(--cc-gold-muted); }
-    .cc-card-num {
-      font-size: 0.68rem; font-weight: 700;
-      letter-spacing: 0.12em; text-transform: uppercase;
-      color: var(--cc-text-subtle); margin-bottom: 0.85rem;
-    }
+    .cc-card-num { font-size: 0.68rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--cc-text-subtle); margin-bottom: 0.85rem; }
     .cc-card-num.gold { color: var(--cc-gold); }
     .cc-card h3 { font-size: 0.95rem; font-weight: 600; margin-bottom: 0.5rem; color: var(--cc-text); }
     .cc-card p { font-size: 0.875rem; color: var(--cc-text-muted); line-height: 1.65; margin: 0; }
 
-    /* ── Principles ───────────────────────────────── */
-    .cc-principles {
-      border-top: 1px solid var(--cc-border);
-      margin: 3.5rem 0 0;
-      padding-top: 3rem;
-    }
-    .cc-principles h2 {
-      font-size: 1.35rem; font-weight: 700;
-      letter-spacing: -0.02em; margin-bottom: 1.5rem;
-      color: var(--cc-text);
-    }
-    .cc-principles h2 span { color: var(--cc-terracotta); }
-    .cc-principle-list { list-style: none; padding: 0; margin: 0; display: grid; gap: 1rem; }
-    .cc-principle-list li {
-      padding: 1rem 1.25rem;
-      background: var(--cc-surface);
-      border-left: 3px solid var(--cc-border);
-      border-radius: 0 0.5rem 0.5rem 0;
-      color: var(--cc-text-muted);
-      font-size: 0.9rem;
-      line-height: 1.6;
-    }
-    .cc-principle-list li strong { color: var(--cc-text); display: block; margin-bottom: 0.2rem; }
-
-    /* ── CTA ──────────────────────────────────────── */
-    .cc-cta {
-      text-align: center;
-      padding: 3.5rem 0 2rem;
-      border-top: 1px solid var(--cc-border);
-      margin-top: 3.5rem;
-    }
-    .cc-cta h2 {
-      font-size: 1.5rem; font-weight: 700;
-      letter-spacing: -0.02em; margin-bottom: 0.5rem;
-    }
-    .cc-cta p { color: var(--cc-text-muted); margin-bottom: 1.75rem; }
-
-    /* ── Pricing ──────────────────────────────────── */
-    .cc-pricing {
-      border-top: 1px solid var(--cc-border);
-      margin: 3.5rem 0 0;
-      padding-top: 3rem;
-      text-align: center;
-    }
-    .cc-pricing > h2 {
-      font-size: 1.5rem; font-weight: 700;
-      letter-spacing: -0.02em; margin-bottom: 0.5rem;
-    }
-    .cc-pricing > h2 span { color: var(--cc-terracotta); }
-    .cc-pricing > .lead {
-      color: var(--cc-text-muted);
-      font-size: 1rem;
-      max-width: 36rem;
-      margin: 0 auto 2.5rem;
-    }
-    .cc-price-card {
-      display: inline-block;
-      text-align: left;
-      background: var(--cc-surface);
-      border: 1px solid var(--cc-gold-muted);
-      border-radius: 1rem;
-      padding: 2.25rem 2.5rem;
-      max-width: 480px;
-      width: 100%;
-      box-shadow: 0 0 48px rgba(201, 78, 42, 0.08);
-    }
-    .cc-price-tag {
-      font-size: 0.68rem; font-weight: 700;
-      letter-spacing: 0.12em; text-transform: uppercase;
-      color: var(--cc-gold); margin-bottom: 1.25rem;
-    }
-    .cc-price-amount {
-      display: flex;
-      align-items: flex-start;
-      gap: 0.15rem;
-      margin-bottom: 0.35rem;
-      line-height: 1;
-    }
-    .cc-price-currency {
-      font-size: 1.75rem; font-weight: 700;
-      color: var(--cc-terracotta);
-      padding-top: 0.4rem;
-    }
-    .cc-price-number {
-      font-size: 5rem; font-weight: 800;
-      letter-spacing: -0.04em;
-      color: var(--cc-terracotta);
-    }
-    .cc-price-label {
-      font-size: 0.85rem;
-      color: var(--cc-text-muted);
-      margin-bottom: 0.25rem;
-    }
-    .cc-price-promise {
-      font-size: 0.78rem; font-weight: 600;
-      color: var(--cc-gold);
-      letter-spacing: 0.04em;
-      margin-bottom: 1.75rem;
-    }
-    .cc-price-divider {
-      border: none;
-      border-top: 1px solid var(--cc-border);
-      margin: 1.5rem 0;
-    }
-    .cc-price-features {
-      list-style: none; padding: 0; margin: 0 0 2rem;
-      display: grid; gap: 0.65rem;
-    }
-    .cc-price-features li {
-      font-size: 0.875rem;
-      color: var(--cc-text-muted);
-      display: flex; align-items: flex-start; gap: 0.6rem;
-      line-height: 1.5;
-    }
-    .cc-price-features li::before {
-      content: "\2713";
-      color: var(--cc-gold);
-      font-weight: 700;
-      flex-shrink: 0;
-      margin-top: 0.05rem;
-    }
-    .cc-price-features li strong { color: var(--cc-text); font-weight: 500; }
-    .cc-price-note {
-      font-size: 0.8rem;
-      color: var(--cc-text-subtle);
-      margin-top: 1.5rem;
-      text-align: center;
-    }
-
     /* ── Terminal showcase ────────────────────────── */
-    .cc-showcase {
-      border-top: 1px solid var(--cc-border);
-      margin: 3.5rem 0 0;
-      padding-top: 3rem;
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 3rem;
-      align-items: center;
-    }
-    @media (max-width: 640px) {
-      .cc-showcase { grid-template-columns: 1fr; }
-      .cc-showcase-visual { order: -1; }
-    }
+    .cc-showcase { border-top: 1px solid var(--cc-border); margin: 3.5rem 0 0; padding-top: 3rem; display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; align-items: center; }
+    @media (max-width: 640px) { .cc-showcase { grid-template-columns: 1fr; } .cc-showcase-visual { order: -1; } }
     .cc-showcase-visual { display: flex; justify-content: center; }
-    .cc-showcase-text h2 {
-      font-size: 1.35rem; font-weight: 700;
-      letter-spacing: -0.02em; margin-bottom: 1rem;
-    }
+    .cc-showcase-text h2 { font-size: 1.35rem; font-weight: 700; letter-spacing: -0.02em; margin-bottom: 1rem; }
     .cc-showcase-text h2 span { color: var(--cc-terracotta); }
-    .cc-showcase-text p {
-      color: var(--cc-text-muted); font-size: 0.9rem;
-      line-height: 1.7; margin-bottom: 1.25rem;
-    }
+    .cc-showcase-text p { color: var(--cc-text-muted); font-size: 0.9rem; line-height: 1.7; margin-bottom: 1.25rem; }
     .cc-spec-list { list-style: none; padding: 0; margin: 0; display: grid; gap: 0.55rem; }
-    .cc-spec-list li {
-      font-size: 0.85rem; color: var(--cc-text-muted);
-      display: flex; align-items: flex-start; gap: 0.5rem; line-height: 1.5;
-    }
+    .cc-spec-list li { font-size: 0.85rem; color: var(--cc-text-muted); display: flex; align-items: flex-start; gap: 0.5rem; line-height: 1.5; }
     .cc-spec-list li::before { content: "\2192"; color: var(--cc-gold); font-weight: 700; flex-shrink: 0; }
     .cc-spec-list li strong { color: var(--cc-text); font-weight: 500; }
 
-    /* ── HR connectors ────────────────────────────── */
-    .cc-connectors {
-      margin-top: 3rem;
+    /* ── Principles ───────────────────────────────── */
+    .cc-principles { border-top: 1px solid var(--cc-border); margin: 3.5rem 0 0; padding-top: 3rem; }
+    .cc-principles h2 { font-size: 1.35rem; font-weight: 700; letter-spacing: -0.02em; margin-bottom: 1.5rem; color: var(--cc-text); }
+    .cc-principles h2 span { color: var(--cc-terracotta); }
+    .cc-principle-list { list-style: none; padding: 0; margin: 0; display: grid; gap: 1rem; }
+    .cc-principle-list li { padding: 1rem 1.25rem; background: var(--cc-surface); border-left: 3px solid var(--cc-border); border-radius: 0 0.5rem 0.5rem 0; color: var(--cc-text-muted); font-size: 0.9rem; line-height: 1.6; }
+    .cc-principle-list li strong { color: var(--cc-text); display: block; margin-bottom: 0.2rem; }
+
+    /* ── Pricing ──────────────────────────────────── */
+    .cc-pricing { border-top: 1px solid var(--cc-border); margin: 3.5rem 0 0; padding-top: 3rem; text-align: center; }
+    .cc-pricing > h2 { font-size: 1.5rem; font-weight: 700; letter-spacing: -0.02em; margin-bottom: 0.5rem; }
+    .cc-pricing > h2 span { color: var(--cc-terracotta); }
+    .cc-pricing > .lead { color: var(--cc-text-muted); font-size: 1rem; max-width: 36rem; margin: 0 auto 2.5rem; }
+    .cc-price-card { display: inline-block; text-align: left; background: var(--cc-surface); border: 1px solid var(--cc-gold-muted); border-radius: 1rem; padding: 2.25rem 2.5rem; max-width: 480px; width: 100%; box-shadow: 0 0 48px rgba(201, 78, 42, 0.08); }
+    .cc-price-tag { font-size: 0.68rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--cc-gold); margin-bottom: 1.25rem; }
+    .cc-price-amount { display: flex; align-items: flex-start; gap: 0.15rem; margin-bottom: 0.35rem; line-height: 1; }
+    .cc-price-currency { font-size: 1.75rem; font-weight: 700; color: var(--cc-terracotta); padding-top: 0.4rem; }
+    .cc-price-number { font-size: 5rem; font-weight: 800; letter-spacing: -0.04em; color: var(--cc-terracotta); }
+    .cc-price-label { font-size: 0.85rem; color: var(--cc-text-muted); margin-bottom: 0.25rem; }
+    .cc-price-promise { font-size: 0.78rem; font-weight: 600; color: var(--cc-gold); letter-spacing: 0.04em; margin-bottom: 1.75rem; }
+    .cc-price-divider { border: none; border-top: 1px solid var(--cc-border); margin: 1.5rem 0; }
+    .cc-price-features { list-style: none; padding: 0; margin: 0 0 2rem; display: grid; gap: 0.65rem; }
+    .cc-price-features li { font-size: 0.875rem; color: var(--cc-text-muted); display: flex; align-items: flex-start; gap: 0.6rem; line-height: 1.5; }
+    .cc-price-features li::before { content: "\2713"; color: var(--cc-gold); font-weight: 700; flex-shrink: 0; margin-top: 0.05rem; }
+    .cc-price-features li strong { color: var(--cc-text); font-weight: 500; }
+    .cc-price-note { font-size: 0.8rem; color: var(--cc-text-subtle); margin-top: 1.5rem; text-align: center; }
+
+    /* ── HR connector grid ────────────────────────── */
+    .cc-connectors { margin-top: 3rem; text-align: center; }
+    .cc-connectors > p {
+      font-size: 0.8rem; color: var(--cc-text-subtle);
+      letter-spacing: 0.06em; text-transform: uppercase; margin-bottom: 1.25rem;
     }
-    .cc-connectors p {
-      font-size: 0.8rem;
-      color: var(--cc-text-subtle);
-      letter-spacing: 0.06em;
-      text-transform: uppercase;
-      margin-bottom: 0.85rem;
+    .cc-connector-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(88px, 1fr));
+      gap: 0.65rem;
+      max-width: 520px;
+      margin: 0 auto;
     }
-    .cc-connector-list {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      gap: 0.5rem;
-    }
-    .cc-connector-pill {
-      font-size: 0.78rem;
-      color: var(--cc-text-muted);
-      border: 1px solid var(--cc-border);
-      border-radius: 999px;
-      padding: 0.25rem 0.75rem;
+    .cc-connector-card {
       background: var(--cc-surface);
+      border: 1px solid var(--cc-border);
+      border-radius: 0.625rem;
+      padding: 0.9rem 0.4rem 0.75rem;
+      display: flex; flex-direction: column;
+      align-items: center; gap: 0.5rem;
+      transition: border-color 0.15s ease;
+      text-decoration: none;
     }
+    .cc-connector-card:hover { border-color: var(--cc-border); }
+    .cc-connector-icon {
+      width: 36px; height: 36px; border-radius: 7px;
+      display: flex; align-items: center; justify-content: center;
+      font-weight: 800; font-size: 0.85rem;
+      font-family: system-ui, sans-serif;
+    }
+    .cc-connector-name { font-size: 0.68rem; color: var(--cc-text-muted); font-weight: 500; line-height: 1.25; text-align: center; }
+
+    /* ── CTA ──────────────────────────────────────── */
+    .cc-cta { text-align: center; padding: 3.5rem 0 2rem; border-top: 1px solid var(--cc-border); margin-top: 3.5rem; }
+    .cc-cta h2 { font-size: 1.5rem; font-weight: 700; letter-spacing: -0.02em; margin-bottom: 0.5rem; }
+    .cc-cta p { color: var(--cc-text-muted); margin-bottom: 1.75rem; }
 
     /* ── Footer ───────────────────────────────────── */
-    footer[role="contentinfo"] {
-      border-top: 1px solid var(--cc-border);
-      padding: 1.5rem 0;
-      margin-top: 3rem;
-    }
+    footer[role="contentinfo"] { border-top: 1px solid var(--cc-border); padding: 1.5rem 0; margin-top: 3rem; }
     footer small { color: var(--cc-text-subtle); }
     footer a { color: var(--cc-text-muted); text-decoration: none; }
     footer a:hover { color: var(--cc-gold); }
@@ -332,7 +217,6 @@
       <ul>
         <li>
           <a href="#" class="cc-nav-logo">
-            <!-- Icon SVG inlined — no external asset needed -->
             <svg width="28" height="28" viewBox="0 0 100 100" fill="none" aria-hidden="true">
               <circle cx="50" cy="50" r="49" fill="#1d1411"/>
               <circle cx="50" cy="50" r="46.5" stroke="#c94e2a" stroke-width="3" fill="none"/>
@@ -350,18 +234,18 @@
         </li>
       </ul>
       <ul>
-        <li><a href="#pricing" class="secondary">Pricing</a></li>
-        <li><a href="mailto:daschub496@gmail.com" role="button" class="secondary outline">Get in touch</a></li>
+        <li><a href="#pricing" class="secondary">Preise</a></li>
+        <li><a href="mailto:daschub496@gmail.com" role="button" class="secondary outline">Kontakt aufnehmen</a></li>
       </ul>
     </nav>
   </header>
 
   <main class="container">
 
+    <!-- Hero -->
     <section class="cc-hero">
-      <div class="cc-badge">Private beta &mdash; currently in development</div>
+      <div class="cc-badge">Private Beta &mdash; aktuell in Entwicklung</div>
 
-      <!-- Inlined icon at hero size -->
       <div class="cc-hero-icon">
         <svg width="88" height="88" viewBox="0 0 100 100" fill="none" aria-hidden="true">
           <circle cx="50" cy="50" r="49" fill="#1d1411"/>
@@ -378,57 +262,62 @@
       </div>
 
       <h1><span class="accent">Crispy</span>Clocks</h1>
-      <p class="cc-tagline">The terminal reads. The ledger remembers. Nothing is guessed.</p>
+      <p class="cc-tagline">Das Terminal erfasst. Das Ledger erinnert. Nichts wird geraten.</p>
       <p class="lead">
-        Terminal-based attendance for modern teams. Tap a card, check in.
-        Every scan is permanent, auditable, and lives entirely on your hardware &mdash;
-        no cloud, no subscription, no data leaving the building.
+        Digitale Zeiterfassung per NFC-Terminal &mdash; ohne Cloud, ohne Abo.
+        Karte antippen, einstempeln. Jeder Scan wird dauerhaft gespeichert,
+        ist vollständig nachvollziehbar und liegt ausschließlich auf Ihrer eigenen Hardware.
       </p>
       <div class="cc-actions">
-        <a href="mailto:daschub496@gmail.com" role="button">Request access</a>
+        <a href="mailto:daschub496@gmail.com" role="button">Jetzt anfragen</a>
         <a href="https://github.com/aimrinova" role="button" class="secondary outline">GitHub</a>
       </div>
     </section>
 
+    <!-- Feature cards -->
     <div class="cc-features">
 
       <article class="cc-card">
-        <div class="cc-card-num">01 &mdash; Architecture</div>
-        <h3>Dumb terminals, smart backend</h3>
+        <div class="cc-card-num">01 &mdash; Architektur</div>
+        <h3>Intelligentes Backend, einfache Terminals</h3>
         <p>
-          Edge devices read a card and send a raw event. All rules &mdash; who the card
-          belongs to, check-in vs check-out, deduplication &mdash; live in the backend
-          where they can be audited, changed, and tested without touching hardware.
+          Das Lesegerät liest eine Karte und sendet ein rohes Ereignis.
+          Alle Regeln &mdash; wem die Karte gehört, Ein- vs. Ausstempeln,
+          Duplikaterkennung &mdash; leben im Backend, wo sie geprüft,
+          geändert und getestet werden können, ohne Hardware anzufassen.
         </p>
       </article>
 
       <article class="cc-card gold-accent">
-        <div class="cc-card-num gold">02 &mdash; Integrity</div>
-        <h3>Append-only audit trail</h3>
+        <div class="cc-card-num gold">02 &mdash; Integrität</div>
+        <h3>Unveränderliches Protokoll</h3>
         <p>
-          Every scan is written once and never mutated. Corrections are new records
-          with an actor and a reason. You have a complete, tamper-evident attendance
-          history from the very first scan.
+          Jeder Scan wird einmalig geschrieben und nie verändert.
+          Korrekturen sind neue Einträge mit Autor und Grund.
+          Sie haben ein vollständiges, manipulationssicheres
+          Anwesenheitsprotokoll ab dem ersten Tag.
         </p>
       </article>
 
       <article class="cc-card">
-        <div class="cc-card-num">03 &mdash; Privacy</div>
-        <h3>Credentials stored as fingerprints</h3>
+        <div class="cc-card-num">03 &mdash; Datenschutz</div>
+        <h3>Zugangsdaten als HMAC-Fingerabdruck</h3>
         <p>
-          Raw card UIDs are never saved. The system stores only an HMAC fingerprint
-          derived from a rotating secret. A stolen database cannot reveal which card
-          belongs to which person.
+          Rohe Karten-UIDs werden nie gespeichert. Das System hält nur einen
+          HMAC-Fingerabdruck, der von einem rotierbaren Secret abgeleitet wird.
+          Eine gestohlene Datenbank kann nicht aufdecken, welche Karte
+          zu welcher Person gehört.
         </p>
       </article>
 
       <article class="cc-card gold-accent">
-        <div class="cc-card-num gold">04 &mdash; Ownership</div>
-        <h3>On-prem, no cloud required</h3>
+        <div class="cc-card-num gold">04 &mdash; Datensouveränität</div>
+        <h3>On-Premise, keine Cloud erforderlich</h3>
         <p>
-          Deploy from a single Docker image. No external accounts, no subscription,
-          no data leaving the building. Runs on an air-gapped network.
-          Your data. Your hardware. Your rules.
+          Betrieb aus einem einzigen Docker-Image auf Ihrem eigenen Server.
+          Keine externen Accounts, kein Abo, keine Daten außer Haus.
+          Funktioniert auch im Intranet ohne Internetzugang.
+          Ihre Daten. Ihre Hardware. Ihre Regeln.
         </p>
       </article>
 
@@ -437,152 +326,173 @@
     <!-- Terminal showcase -->
     <section class="cc-showcase">
       <div class="cc-showcase-visual">
-        <svg viewBox="0 0 180 310" fill="none" xmlns="http://www.w3.org/2000/svg" width="220" aria-label="CrispyClocks terminal illustration">
-          <!-- Ambient glow -->
+        <svg viewBox="0 0 180 310" fill="none" xmlns="http://www.w3.org/2000/svg" width="220" aria-label="CrispyClocks Terminal Illustration">
           <ellipse cx="90" cy="158" rx="82" ry="130" fill="rgba(201,78,42,0.05)"/>
-          <!-- Terminal body -->
           <rect x="15" y="10" width="150" height="290" rx="20" fill="#1d1411" stroke="#c94e2a" stroke-width="1.5"/>
-          <!-- Status LED — gold = online -->
           <circle cx="152" cy="24" r="3.5" fill="#c9a84c"/>
-          <!-- Brand mark -->
           <text x="28" y="26" font-family="system-ui,sans-serif" font-size="7.5" font-weight="700" fill="#c94e2a" opacity="0.8">CC</text>
-          <!-- Screen -->
           <rect x="28" y="36" width="124" height="155" rx="8" fill="#2a1c15"/>
-          <!-- Success ring -->
           <circle cx="90" cy="106" r="30" stroke="#c9a84c" stroke-width="1.5" fill="none"/>
-          <!-- Checkmark -->
           <polyline points="77,106 88,118 108,94" stroke="#c9a84c" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/>
-          <!-- Status text -->
-          <text x="90" y="154" text-anchor="middle" font-family="system-ui,sans-serif" font-size="10" font-weight="600" fill="#f0e4da">Checked in</text>
+          <text x="90" y="154" text-anchor="middle" font-family="system-ui,sans-serif" font-size="10" font-weight="600" fill="#f0e4da">Eingecheckt</text>
           <text x="90" y="169" text-anchor="middle" font-family="system-ui,sans-serif" font-size="9" fill="#c9a84c">09:03</text>
           <text x="90" y="182" text-anchor="middle" font-family="system-ui,sans-serif" font-size="8" fill="#9c7f6e">Anna M.</text>
-          <!-- Divider -->
           <line x1="28" y1="197" x2="152" y2="197" stroke="#3d2418" stroke-width="1"/>
-          <!-- NFC label -->
-          <text x="90" y="220" text-anchor="middle" font-family="system-ui,sans-serif" font-size="6.5" letter-spacing="0.14em" fill="#5c4030">TAP HERE</text>
-          <!-- NFC waves — arcs opening upward -->
+          <text x="90" y="220" text-anchor="middle" font-family="system-ui,sans-serif" font-size="6.5" letter-spacing="0.12em" fill="#5c4030">KARTE TIPPEN</text>
           <path d="M 83 248 A 7 7 0 0 0 97 248"   stroke="#c94e2a" stroke-width="2.5" stroke-linecap="round" fill="none" opacity="0.9"/>
           <path d="M 77 248 A 13 13 0 0 0 103 248" stroke="#c94e2a" stroke-width="2"   stroke-linecap="round" fill="none" opacity="0.6"/>
           <path d="M 71 248 A 19 19 0 0 0 109 248" stroke="#c94e2a" stroke-width="1.5" stroke-linecap="round" fill="none" opacity="0.3"/>
-          <!-- NFC source dot -->
           <circle cx="90" cy="254" r="2.5" fill="#c94e2a"/>
-          <!-- Home bar -->
           <rect x="70" y="282" width="40" height="4" rx="2" fill="#3d2418"/>
         </svg>
       </div>
       <div class="cc-showcase-text">
-        <h2>A terminal that <span>fits anywhere</span></h2>
+        <h2>Ein Terminal, das <span>überall passt</span></h2>
         <p>
-          A compact, wall-mounted NFC reader connected to your local network.
-          Employees tap a card, tag, or sticker &mdash; and the result appears
-          on screen within a second. No app. No login. No friction.
+          Ein kompaktes, wandmontierbares NFC-Lesegerät, das mit Ihrem lokalen
+          Netzwerk verbunden ist. Mitarbeiter tippen eine Karte, einen Tag oder
+          Aufkleber an &mdash; das Ergebnis erscheint innerhalb einer Sekunde
+          auf dem Display. Keine App. Kein Login. Keine Reibung.
         </p>
         <ul class="cc-spec-list">
-          <li><strong>NFC tap</strong> &mdash; contactless cards, tags, and stickers</li>
-          <li><strong>Instant on-screen feedback</strong> &mdash; name, time, check-in or out</li>
-          <li><strong>Local network only</strong> &mdash; no internet required at the terminal</li>
-          <li><strong>Wall mountable</strong> &mdash; mounting hardware included</li>
-          <li><strong>Always on</strong> &mdash; USB-C powered, auto-restart on failure</li>
-          <li><strong>Private by design</strong> &mdash; raw card UID never stored</li>
+          <li><strong>NFC-Tap</strong> &mdash; kontaktlose Karten, Tags und Aufkleber</li>
+          <li><strong>Sofortige Rückmeldung</strong> &mdash; Name, Uhrzeit, Ein- oder Ausstempeln</li>
+          <li><strong>Nur lokales Netzwerk</strong> &mdash; kein Internet am Terminal erforderlich</li>
+          <li><strong>Wandmontage</strong> &mdash; Befestigungsmaterial inklusive</li>
+          <li><strong>Dauerbetrieb</strong> &mdash; USB-C-Speisung, automatischer Neustart bei Ausfall</li>
+          <li><strong>Privacy by Design</strong> &mdash; rohe Karten-UID wird nie gespeichert</li>
         </ul>
       </div>
     </section>
 
-    <!-- Engineering principles section -->
+    <!-- Engineering principles -->
     <section class="cc-principles">
-      <h2>Built on <span>honest</span> engineering</h2>
+      <h2>Gebaut auf <span>ehrlichem</span> Engineering</h2>
       <ul class="cc-principle-list">
         <li>
-          <strong>The terminal is a dumb edge device.</strong>
-          It reads hardware, timestamps, and sends. Every business rule lives in the backend
-          &mdash; that is where decisions belong, where they can be tested, and where they
-          leave a trace.
+          <strong>Das Terminal ist ein einfaches Edge-Gerät.</strong>
+          Es liest Hardware, setzt Zeitstempel und sendet. Jede Geschäftsregel
+          lebt im Backend &mdash; dort wo Entscheidungen hingehören, wo sie
+          getestet werden können und wo sie eine Spur hinterlassen.
         </li>
         <li>
-          <strong>An event is permanent the moment it is written.</strong>
-          The attendance ledger is append-only. This is not a restriction &mdash; it is a
-          guarantee. You can always reconstruct exactly what happened and why.
+          <strong>Ein Ereignis ist permanent, sobald es geschrieben ist.</strong>
+          Das Anwesenheits-Ledger ist append-only. Das ist keine Einschränkung,
+          sondern eine Garantie: Sie können immer exakt rekonstruieren,
+          was wann und warum passiert ist.
         </li>
         <li>
-          <strong>Credentials are identifiers, not secrets.</strong>
-          NFC cards can be cloned. So we never store the raw UID &mdash; only an HMAC
-          fingerprint keyed to a secret you control. The fingerprint is useless without the key.
+          <strong>Zugangsdaten sind Kennungen, keine Geheimnisse.</strong>
+          NFC-Karten können geklont werden. Deshalb speichern wir nie die rohe UID,
+          sondern nur einen HMAC-Fingerabdruck, der an ein Secret geknüpft ist,
+          das Sie kontrollieren. Der Fingerabdruck ist ohne den Schlüssel wertlos.
         </li>
         <li>
-          <strong>Your data does not leave the building.</strong>
-          CrispyClocks is designed for on-premise deployment from day one. GDPR compliance
-          is an architectural property, not a checkbox.
+          <strong>Ihre Daten verlassen das Gebäude nicht.</strong>
+          CrispyClocks ist von Tag eins für On-Premise-Betrieb ausgelegt.
+          DSGVO-Konformität ist eine Architektureigenschaft, kein Häkchen
+          in einer Checkliste.
         </li>
       </ul>
     </section>
 
     <!-- Pricing -->
     <section class="cc-pricing" id="pricing">
-      <h2>Simple, <span>honest</span> pricing</h2>
+      <h2>Einfache, <span>faire</span> Preise</h2>
       <p class="lead">
-        One payment covers everything &mdash; hardware, installation, and software.
-        No subscriptions. No monthly fees. No hidden costs. Ever.
+        Eine Zahlung deckt alles ab &mdash; Hardware, Installation und Software.
+        Keine Abos. Keine Monatsgebühren. Keine versteckten Kosten. Jemals.
       </p>
 
       <div class="cc-price-card">
-        <div class="cc-price-tag">Complete installation</div>
+        <div class="cc-price-tag">Vollständige Installation</div>
         <div class="cc-price-amount">
           <span class="cc-price-currency">&euro;</span>
           <span class="cc-price-number">150</span>
         </div>
-        <div class="cc-price-label">one-time payment &mdash; per terminal</div>
-        <div class="cc-price-promise">No subscription. No renewal. No lock-in.</div>
+        <div class="cc-price-label">einmalige Zahlung &mdash; pro Terminal</div>
+        <div class="cc-price-promise">Kein Abo. Keine Verlängerung. Kein Lock-in.</div>
 
         <hr class="cc-price-divider">
 
         <ul class="cc-price-features">
-          <li><strong>NFC terminal hardware</strong> &mdash; ready to mount and scan</li>
-          <li><strong>On-site installation</strong> &mdash; we set it up, you approve it</li>
-          <li><strong>Backend software</strong> &mdash; fully configured, running on your server</li>
-          <li><strong>HR API connector of your choice</strong> &mdash; see integrations below</li>
-          <li><strong>Lifetime use</strong> &mdash; the software never expires</li>
-          <li><strong>Your data, on your hardware</strong> &mdash; GDPR by architecture</li>
-          <li>All future software updates included</li>
+          <li><strong>NFC-Terminal (Hardware)</strong> &mdash; einsatzbereit zur Wandmontage</li>
+          <li><strong>Installation vor Ort</strong> &mdash; wir richten ein, Sie nehmen ab</li>
+          <li><strong>Backend-Software</strong> &mdash; vollständig konfiguriert, läuft auf Ihrem Server</li>
+          <li><strong>HR-API-Konnektor Ihrer Wahl</strong> &mdash; siehe Integrationen unten</li>
+          <li><strong>Lebenslange Nutzung</strong> &mdash; die Software läuft ohne Ablaufdatum</li>
+          <li><strong>Ihre Daten, auf Ihrer Hardware</strong> &mdash; DSGVO durch Architektur</li>
+          <li>Alle zukünftigen Software-Updates inklusive</li>
         </ul>
 
         <a href="mailto:daschub496@gmail.com" role="button" style="width:100%;text-align:center;display:block;">
-          Request an installation &rarr;
+          Installation anfragen &rarr;
         </a>
       </div>
 
       <p class="cc-price-note">
-        Additional terminals from &euro;80 each &ensp;&middot;&ensp;
-        Custom integrations available on request
+        Weitere Terminals ab &euro;80 &ensp;&middot;&ensp;
+        Individuelle Integrationen auf Anfrage
       </p>
 
+      <!-- HR connector grid -->
       <div class="cc-connectors">
-        <p>Works with the HR &amp; payroll platforms your team already uses</p>
-        <div class="cc-connector-list">
-          <span class="cc-connector-pill">Personio</span>
-          <span class="cc-connector-pill">DATEV</span>
-          <span class="cc-connector-pill">SAP SuccessFactors</span>
-          <span class="cc-connector-pill">BambooHR</span>
-          <span class="cc-connector-pill">Sage HR</span>
-          <span class="cc-connector-pill">Factorial</span>
-          <span class="cc-connector-pill">HiBob</span>
+        <p>Kompatibel mit den HR- &amp; Payroll-Systemen, die Ihr Team bereits nutzt</p>
+        <div class="cc-connector-grid">
+
+          <div class="cc-connector-card">
+            <div class="cc-connector-icon" style="background:rgba(255,112,67,0.15);color:#ff7c4d;">P</div>
+            <span class="cc-connector-name">Personio</span>
+          </div>
+
+          <div class="cc-connector-card">
+            <div class="cc-connector-icon" style="background:rgba(0,96,168,0.15);color:#4da6ff;">D</div>
+            <span class="cc-connector-name">DATEV</span>
+          </div>
+
+          <div class="cc-connector-card">
+            <div class="cc-connector-icon" style="background:rgba(0,112,242,0.12);color:#5ab4ff;font-size:0.7rem;letter-spacing:-0.03em;">SAP</div>
+            <span class="cc-connector-name">SAP SuccessFactors</span>
+          </div>
+
+          <div class="cc-connector-card">
+            <div class="cc-connector-icon" style="background:rgba(115,180,63,0.15);color:#8dd455;font-size:0.7rem;">bHR</div>
+            <span class="cc-connector-name">BambooHR</span>
+          </div>
+
+          <div class="cc-connector-card">
+            <div class="cc-connector-icon" style="background:rgba(0,176,80,0.15);color:#4dcc7a;">S</div>
+            <span class="cc-connector-name">Sage HR</span>
+          </div>
+
+          <div class="cc-connector-card">
+            <div class="cc-connector-icon" style="background:rgba(124,58,237,0.15);color:#a78bfa;">F</div>
+            <span class="cc-connector-name">Factorial</span>
+          </div>
+
+          <div class="cc-connector-card">
+            <div class="cc-connector-icon" style="background:rgba(229,57,53,0.12);color:#ff6b6b;font-size:0.7rem;">bob</div>
+            <span class="cc-connector-name">HiBob</span>
+          </div>
+
         </div>
-        <p class="cc-price-note" style="margin-top:1rem;">
-          One connector of your choice is included in every installation.<br>
-          Not on the list? Get in touch &mdash; we build for your stack.
+        <p class="cc-price-note" style="margin-top:1.25rem;">
+          Ein Konnektor Ihrer Wahl ist in jeder Installation enthalten.<br>
+          Ihr System nicht dabei? Sprechen Sie uns an &mdash; wir entwickeln f&uuml;r Ihren Stack.
         </p>
       </div>
     </section>
 
     <!-- CTA -->
     <section class="cc-cta">
-      <h2>Ready to get started?</h2>
+      <h2>Bereit loszulegen?</h2>
       <p>
-        Tell us your site, how many terminals you need, and which HR system you use.<br>
-        We handle everything else.
+        Nennen Sie uns Ihren Standort, die Anzahl der ben&ouml;tigten Terminals
+        und Ihr HR-System. Wir k&uuml;mmern uns um den Rest.
       </p>
       <div class="cc-actions">
-        <a href="mailto:daschub496@gmail.com" role="button">Request an installation</a>
-        <a href="#pricing" role="button" class="secondary outline">See pricing</a>
+        <a href="mailto:daschub496@gmail.com" role="button">Installation anfragen</a>
+        <a href="#pricing" role="button" class="secondary outline">Zu den Preisen</a>
       </div>
     </section>
 
