@@ -1,0 +1,511 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>CrispyClocks &mdash; Terminal attendance. Honest records.</title>
+  <meta name="description" content="Terminal-based attendance for modern teams. Every scan is written once, never changed, and stays on your hardware.">
+
+  <!-- Pico CSS — acceptable on the public marketing page (internet assumed) -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.min.css">
+
+  <style>
+    /* ── Colour tokens ──────────────────────────────── */
+    :root, [data-theme="dark"] {
+      --cc-terracotta:       #c94e2a;
+      --cc-terracotta-light: #e05c30;
+      --cc-gold:             #c9a84c;
+      --cc-gold-muted:       #9a7d35;
+      --cc-bg-base:          #120d0a;
+      --cc-surface:          #1d1411;
+      --cc-elevated:         #2a1c15;
+      --cc-border:           #3d2418;
+      --cc-text:             #f0e4da;
+      --cc-text-muted:       #9c7f6e;
+      --cc-text-subtle:      #5c4030;
+
+      --pico-background-color:               #120d0a;
+      --pico-color:                          #f0e4da;
+      --pico-muted-color:                    #9c7f6e;
+      --pico-muted-border-color:             #3d2418;
+      --pico-primary:                        #c94e2a;
+      --pico-primary-background:             #c94e2a;
+      --pico-primary-border:                 #c94e2a;
+      --pico-primary-hover:                  #e05c30;
+      --pico-primary-hover-background:       #e05c30;
+      --pico-primary-focus:                  rgba(201, 78, 42, 0.28);
+      --pico-primary-inverse:                #f0e4da;
+      --pico-secondary:                      #9a7d35;
+      --pico-secondary-hover:                #c9a84c;
+      --pico-secondary-inverse:              #120d0a;
+      --pico-card-background-color:          #1d1411;
+      --pico-card-border-color:              #3d2418;
+    }
+
+    body { color-scheme: dark; }
+
+    /* ── Nav ──────────────────────────────────────── */
+    header[role="banner"] {
+      border-bottom: 1px solid var(--cc-border);
+      padding: 0.875rem 0;
+    }
+    .cc-nav-logo { display: inline-flex; align-items: center; text-decoration: none; gap: 0.6rem; }
+    .cc-brand-text {
+      font-size: 1.1rem; font-weight: 800;
+      letter-spacing: -0.03em; line-height: 1;
+    }
+    .cc-brand-text .accent { color: var(--cc-terracotta); }
+
+    /* ── Badge ────────────────────────────────────── */
+    .cc-badge {
+      display: inline-block;
+      font-size: 0.68rem;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--cc-gold);
+      border: 1px solid var(--cc-gold-muted);
+      border-radius: 999px;
+      padding: 0.2rem 0.65rem;
+      margin-bottom: 1.5rem;
+    }
+
+    /* ── Hero ─────────────────────────────────────── */
+    .cc-hero { padding: 5rem 0 3.5rem; text-align: center; }
+    .cc-hero-icon {
+      width: 88px; height: 88px;
+      margin-bottom: 1.5rem;
+      filter: drop-shadow(0 4px 24px rgba(201, 78, 42, 0.35));
+    }
+    .cc-hero h1 {
+      font-size: clamp(2.25rem, 6vw, 3.75rem);
+      font-weight: 800;
+      letter-spacing: -0.04em;
+      line-height: 1.1;
+      color: var(--cc-text);
+      margin-bottom: 0;
+    }
+    .cc-hero h1 .accent { color: var(--cc-terracotta); }
+    .cc-tagline {
+      font-size: 1.05rem;
+      font-weight: 500;
+      color: var(--cc-gold);
+      font-style: italic;
+      margin: 0.75rem 0 0.85rem;
+    }
+    .cc-hero .lead {
+      font-size: 1.1rem;
+      line-height: 1.7;
+      color: var(--cc-text-muted);
+      max-width: 46rem;
+      margin: 0 auto 2.5rem;
+    }
+    .cc-actions { display: flex; gap: 0.75rem; justify-content: center; flex-wrap: wrap; }
+
+    /* ── Features ─────────────────────────────────── */
+    .cc-features {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr));
+      gap: 1rem;
+      margin: 3.5rem 0;
+    }
+    .cc-card {
+      background: var(--cc-surface);
+      border: 1px solid var(--cc-border);
+      border-radius: 0.75rem;
+      padding: 1.5rem;
+      transition: border-color 0.15s ease;
+    }
+    .cc-card:hover { border-color: var(--cc-terracotta); }
+    .cc-card.gold-accent { border-left: 3px solid var(--cc-gold-muted); }
+    .cc-card-num {
+      font-size: 0.68rem; font-weight: 700;
+      letter-spacing: 0.12em; text-transform: uppercase;
+      color: var(--cc-text-subtle); margin-bottom: 0.85rem;
+    }
+    .cc-card-num.gold { color: var(--cc-gold); }
+    .cc-card h3 { font-size: 0.95rem; font-weight: 600; margin-bottom: 0.5rem; color: var(--cc-text); }
+    .cc-card p { font-size: 0.875rem; color: var(--cc-text-muted); line-height: 1.65; margin: 0; }
+
+    /* ── Principles ───────────────────────────────── */
+    .cc-principles {
+      border-top: 1px solid var(--cc-border);
+      margin: 3.5rem 0 0;
+      padding-top: 3rem;
+    }
+    .cc-principles h2 {
+      font-size: 1.35rem; font-weight: 700;
+      letter-spacing: -0.02em; margin-bottom: 1.5rem;
+      color: var(--cc-text);
+    }
+    .cc-principles h2 span { color: var(--cc-terracotta); }
+    .cc-principle-list { list-style: none; padding: 0; margin: 0; display: grid; gap: 1rem; }
+    .cc-principle-list li {
+      padding: 1rem 1.25rem;
+      background: var(--cc-surface);
+      border-left: 3px solid var(--cc-border);
+      border-radius: 0 0.5rem 0.5rem 0;
+      color: var(--cc-text-muted);
+      font-size: 0.9rem;
+      line-height: 1.6;
+    }
+    .cc-principle-list li strong { color: var(--cc-text); display: block; margin-bottom: 0.2rem; }
+
+    /* ── CTA ──────────────────────────────────────── */
+    .cc-cta {
+      text-align: center;
+      padding: 3.5rem 0 2rem;
+      border-top: 1px solid var(--cc-border);
+      margin-top: 3.5rem;
+    }
+    .cc-cta h2 {
+      font-size: 1.5rem; font-weight: 700;
+      letter-spacing: -0.02em; margin-bottom: 0.5rem;
+    }
+    .cc-cta p { color: var(--cc-text-muted); margin-bottom: 1.75rem; }
+
+    /* ── Pricing ──────────────────────────────────── */
+    .cc-pricing {
+      border-top: 1px solid var(--cc-border);
+      margin: 3.5rem 0 0;
+      padding-top: 3rem;
+      text-align: center;
+    }
+    .cc-pricing > h2 {
+      font-size: 1.5rem; font-weight: 700;
+      letter-spacing: -0.02em; margin-bottom: 0.5rem;
+    }
+    .cc-pricing > h2 span { color: var(--cc-terracotta); }
+    .cc-pricing > .lead {
+      color: var(--cc-text-muted);
+      font-size: 1rem;
+      max-width: 36rem;
+      margin: 0 auto 2.5rem;
+    }
+    .cc-price-card {
+      display: inline-block;
+      text-align: left;
+      background: var(--cc-surface);
+      border: 1px solid var(--cc-gold-muted);
+      border-radius: 1rem;
+      padding: 2.25rem 2.5rem;
+      max-width: 480px;
+      width: 100%;
+      box-shadow: 0 0 48px rgba(201, 78, 42, 0.08);
+    }
+    .cc-price-tag {
+      font-size: 0.68rem; font-weight: 700;
+      letter-spacing: 0.12em; text-transform: uppercase;
+      color: var(--cc-gold); margin-bottom: 1.25rem;
+    }
+    .cc-price-amount {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.15rem;
+      margin-bottom: 0.35rem;
+      line-height: 1;
+    }
+    .cc-price-currency {
+      font-size: 1.75rem; font-weight: 700;
+      color: var(--cc-terracotta);
+      padding-top: 0.4rem;
+    }
+    .cc-price-number {
+      font-size: 5rem; font-weight: 800;
+      letter-spacing: -0.04em;
+      color: var(--cc-terracotta);
+    }
+    .cc-price-label {
+      font-size: 0.85rem;
+      color: var(--cc-text-muted);
+      margin-bottom: 0.25rem;
+    }
+    .cc-price-promise {
+      font-size: 0.78rem; font-weight: 600;
+      color: var(--cc-gold);
+      letter-spacing: 0.04em;
+      margin-bottom: 1.75rem;
+    }
+    .cc-price-divider {
+      border: none;
+      border-top: 1px solid var(--cc-border);
+      margin: 1.5rem 0;
+    }
+    .cc-price-features {
+      list-style: none; padding: 0; margin: 0 0 2rem;
+      display: grid; gap: 0.65rem;
+    }
+    .cc-price-features li {
+      font-size: 0.875rem;
+      color: var(--cc-text-muted);
+      display: flex; align-items: flex-start; gap: 0.6rem;
+      line-height: 1.5;
+    }
+    .cc-price-features li::before {
+      content: "\2713";
+      color: var(--cc-gold);
+      font-weight: 700;
+      flex-shrink: 0;
+      margin-top: 0.05rem;
+    }
+    .cc-price-features li strong { color: var(--cc-text); font-weight: 500; }
+    .cc-price-note {
+      font-size: 0.8rem;
+      color: var(--cc-text-subtle);
+      margin-top: 1.5rem;
+      text-align: center;
+    }
+
+    /* ── HR connectors ────────────────────────────── */
+    .cc-connectors {
+      margin-top: 3rem;
+    }
+    .cc-connectors p {
+      font-size: 0.8rem;
+      color: var(--cc-text-subtle);
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      margin-bottom: 0.85rem;
+    }
+    .cc-connector-list {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 0.5rem;
+    }
+    .cc-connector-pill {
+      font-size: 0.78rem;
+      color: var(--cc-text-muted);
+      border: 1px solid var(--cc-border);
+      border-radius: 999px;
+      padding: 0.25rem 0.75rem;
+      background: var(--cc-surface);
+    }
+
+    /* ── Footer ───────────────────────────────────── */
+    footer[role="contentinfo"] {
+      border-top: 1px solid var(--cc-border);
+      padding: 1.5rem 0;
+      margin-top: 3rem;
+    }
+    footer small { color: var(--cc-text-subtle); }
+    footer a { color: var(--cc-text-muted); text-decoration: none; }
+    footer a:hover { color: var(--cc-gold); }
+  </style>
+</head>
+<body>
+
+  <header class="container-fluid" role="banner">
+    <nav class="container">
+      <ul>
+        <li>
+          <a href="#" class="cc-nav-logo">
+            <!-- Icon SVG inlined — no external asset needed -->
+            <svg width="28" height="28" viewBox="0 0 100 100" fill="none" aria-hidden="true">
+              <circle cx="50" cy="50" r="49" fill="#1d1411"/>
+              <circle cx="50" cy="50" r="46.5" stroke="#c94e2a" stroke-width="3" fill="none"/>
+              <line x1="50" y1="7"  x2="50" y2="13" stroke="#5c4030" stroke-width="2" stroke-linecap="round"/>
+              <line x1="93" y1="50" x2="87" y2="50" stroke="#5c4030" stroke-width="2" stroke-linecap="round"/>
+              <line x1="50" y1="93" x2="50" y2="87" stroke="#5c4030" stroke-width="2" stroke-linecap="round"/>
+              <line x1="7"  y1="50" x2="13" y2="50" stroke="#5c4030" stroke-width="2" stroke-linecap="round"/>
+              <line x1="50" y1="50" x2="28" y2="38" stroke="#c94e2a" stroke-width="4.5" stroke-linecap="round"/>
+              <line x1="50" y1="50" x2="80" y2="33" stroke="#e05c30" stroke-width="2.5" stroke-linecap="round"/>
+              <circle cx="50" cy="50" r="3.5" fill="#c94e2a"/>
+              <polyline points="36,69 44,78 64,60" stroke="#c9a84c" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+            <span class="cc-brand-text"><span class="accent">Crispy</span>Clocks</span>
+          </a>
+        </li>
+      </ul>
+      <ul>
+        <li><a href="#pricing" class="secondary">Pricing</a></li>
+        <li><a href="mailto:daschub496@gmail.com" role="button" class="secondary outline">Get in touch</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main class="container">
+
+    <section class="cc-hero">
+      <div class="cc-badge">Private beta &mdash; currently in development</div>
+
+      <!-- Inlined icon at hero size -->
+      <div class="cc-hero-icon">
+        <svg width="88" height="88" viewBox="0 0 100 100" fill="none" aria-hidden="true">
+          <circle cx="50" cy="50" r="49" fill="#1d1411"/>
+          <circle cx="50" cy="50" r="46.5" stroke="#c94e2a" stroke-width="3" fill="none"/>
+          <line x1="50" y1="7"  x2="50" y2="13" stroke="#5c4030" stroke-width="2" stroke-linecap="round"/>
+          <line x1="93" y1="50" x2="87" y2="50" stroke="#5c4030" stroke-width="2" stroke-linecap="round"/>
+          <line x1="50" y1="93" x2="50" y2="87" stroke="#5c4030" stroke-width="2" stroke-linecap="round"/>
+          <line x1="7"  y1="50" x2="13" y2="50" stroke="#5c4030" stroke-width="2" stroke-linecap="round"/>
+          <line x1="50" y1="50" x2="28" y2="38" stroke="#c94e2a" stroke-width="4.5" stroke-linecap="round"/>
+          <line x1="50" y1="50" x2="80" y2="33" stroke="#e05c30" stroke-width="2.5" stroke-linecap="round"/>
+          <circle cx="50" cy="50" r="3.5" fill="#c94e2a"/>
+          <polyline points="36,69 44,78 64,60" stroke="#c9a84c" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </div>
+
+      <h1><span class="accent">Crispy</span>Clocks</h1>
+      <p class="cc-tagline">The terminal reads. The ledger remembers. Nothing is guessed.</p>
+      <p class="lead">
+        Terminal-based attendance for modern teams. Tap a card, check in.
+        Every scan is permanent, auditable, and lives entirely on your hardware &mdash;
+        no cloud, no subscription, no data leaving the building.
+      </p>
+      <div class="cc-actions">
+        <a href="mailto:daschub496@gmail.com" role="button">Request access</a>
+        <a href="https://github.com/aimrinova" role="button" class="secondary outline">GitHub</a>
+      </div>
+    </section>
+
+    <div class="cc-features">
+
+      <article class="cc-card">
+        <div class="cc-card-num">01 &mdash; Architecture</div>
+        <h3>Dumb terminals, smart backend</h3>
+        <p>
+          Edge devices read a card and send a raw event. All rules &mdash; who the card
+          belongs to, check-in vs check-out, deduplication &mdash; live in the backend
+          where they can be audited, changed, and tested without touching hardware.
+        </p>
+      </article>
+
+      <article class="cc-card gold-accent">
+        <div class="cc-card-num gold">02 &mdash; Integrity</div>
+        <h3>Append-only audit trail</h3>
+        <p>
+          Every scan is written once and never mutated. Corrections are new records
+          with an actor and a reason. You have a complete, tamper-evident attendance
+          history from the very first scan.
+        </p>
+      </article>
+
+      <article class="cc-card">
+        <div class="cc-card-num">03 &mdash; Privacy</div>
+        <h3>Credentials stored as fingerprints</h3>
+        <p>
+          Raw card UIDs are never saved. The system stores only an HMAC fingerprint
+          derived from a rotating secret. A stolen database cannot reveal which card
+          belongs to which person.
+        </p>
+      </article>
+
+      <article class="cc-card gold-accent">
+        <div class="cc-card-num gold">04 &mdash; Ownership</div>
+        <h3>On-prem, no cloud required</h3>
+        <p>
+          Deploy from a single Docker image. No external accounts, no subscription,
+          no data leaving the building. Runs on an air-gapped network.
+          Your data. Your hardware. Your rules.
+        </p>
+      </article>
+
+    </div>
+
+    <!-- Engineering principles section -->
+    <section class="cc-principles">
+      <h2>Built on <span>honest</span> engineering</h2>
+      <ul class="cc-principle-list">
+        <li>
+          <strong>The terminal is a dumb edge device.</strong>
+          It reads hardware, timestamps, and sends. Every business rule lives in the backend
+          &mdash; that is where decisions belong, where they can be tested, and where they
+          leave a trace.
+        </li>
+        <li>
+          <strong>An event is permanent the moment it is written.</strong>
+          The attendance ledger is append-only. This is not a restriction &mdash; it is a
+          guarantee. You can always reconstruct exactly what happened and why.
+        </li>
+        <li>
+          <strong>Credentials are identifiers, not secrets.</strong>
+          NFC cards can be cloned. So we never store the raw UID &mdash; only an HMAC
+          fingerprint keyed to a secret you control. The fingerprint is useless without the key.
+        </li>
+        <li>
+          <strong>Your data does not leave the building.</strong>
+          CrispyClocks is designed for on-premise deployment from day one. GDPR compliance
+          is an architectural property, not a checkbox.
+        </li>
+      </ul>
+    </section>
+
+    <!-- Pricing -->
+    <section class="cc-pricing" id="pricing">
+      <h2>Simple, <span>honest</span> pricing</h2>
+      <p class="lead">
+        One payment covers everything &mdash; hardware, installation, and software.
+        No subscriptions. No monthly fees. No hidden costs. Ever.
+      </p>
+
+      <div class="cc-price-card">
+        <div class="cc-price-tag">Complete installation</div>
+        <div class="cc-price-amount">
+          <span class="cc-price-currency">&euro;</span>
+          <span class="cc-price-number">150</span>
+        </div>
+        <div class="cc-price-label">one-time payment &mdash; per terminal</div>
+        <div class="cc-price-promise">No subscription. No renewal. No lock-in.</div>
+
+        <hr class="cc-price-divider">
+
+        <ul class="cc-price-features">
+          <li><strong>NFC terminal hardware</strong> &mdash; ready to mount and scan</li>
+          <li><strong>On-site installation</strong> &mdash; we set it up, you approve it</li>
+          <li><strong>Backend software</strong> &mdash; fully configured, running on your server</li>
+          <li><strong>HR API connector of your choice</strong> &mdash; see integrations below</li>
+          <li><strong>Lifetime use</strong> &mdash; the software never expires</li>
+          <li><strong>Your data, on your hardware</strong> &mdash; GDPR by architecture</li>
+          <li>All future software updates included</li>
+        </ul>
+
+        <a href="mailto:daschub496@gmail.com" role="button" style="width:100%;text-align:center;display:block;">
+          Request an installation &rarr;
+        </a>
+      </div>
+
+      <p class="cc-price-note">
+        Additional terminals from &euro;80 each &ensp;&middot;&ensp;
+        Custom integrations available on request
+      </p>
+
+      <div class="cc-connectors">
+        <p>HR &amp; payroll integrations available</p>
+        <div class="cc-connector-list">
+          <span class="cc-connector-pill">Personio</span>
+          <span class="cc-connector-pill">DATEV</span>
+          <span class="cc-connector-pill">SAP SuccessFactors</span>
+          <span class="cc-connector-pill">BambooHR</span>
+          <span class="cc-connector-pill">Sage HR</span>
+          <span class="cc-connector-pill">CSV / Excel export</span>
+          <span class="cc-connector-pill">Custom API</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- CTA -->
+    <section class="cc-cta">
+      <h2>Ready to get started?</h2>
+      <p>
+        Tell us your site, how many terminals you need, and which HR system you use.<br>
+        We handle everything else.
+      </p>
+      <div class="cc-actions">
+        <a href="mailto:daschub496@gmail.com" role="button">Request an installation</a>
+        <a href="#pricing" role="button" class="secondary outline">See pricing</a>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="container-fluid" role="contentinfo">
+    <div class="container">
+      <small>
+        &copy; 2026 <a href="https://github.com/aimrinova">aimrinova</a>.
+        All rights reserved. &ensp;&middot;&ensp; Proprietary software &mdash; not open source.
+      </small>
+    </div>
+  </footer>
+
+</body>
+</html>
